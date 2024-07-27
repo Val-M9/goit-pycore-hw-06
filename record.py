@@ -8,7 +8,7 @@ class Record:
 
   def add_phone(self, phone: str) -> None:
     try:
-      valid_phone = Phone(phone).validate_phone()
+      valid_phone = Phone(phone)
       self.phones.append(valid_phone)
     except ValueError as e:
       print(e)
@@ -24,7 +24,7 @@ class Record:
       print(f'Phone number {phone} was not found')
     for i, phone_record in enumerate(self.phones):
       if phone_record == phone:
-        self.phones[i] = new_phone
+        self.phones[i] = Phone(new_phone)
         print(f'Phone number {phone} has been changed to {new_phone}')
 
   def find_phone(self, phone: str) -> None:
@@ -35,4 +35,4 @@ class Record:
         print(f'Phone number {phone} was found')
 
   def __str__(self):
-    return f'Contact name: {self.name.value}, phones: {'; '.join(p for p in self.phones)}'
+    return f'Contact name: {self.name.value}, phones: {"; ".join(p.value for p in self.phones)}'

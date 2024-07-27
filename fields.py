@@ -16,6 +16,8 @@ class Name(Field):
 
 class Phone(Field):
   def __init__(self, value: str):
+    super().__init__(value)
+    self.validate_phone()
     self.value = value
 
   def validate_phone(self) -> str:
@@ -23,4 +25,10 @@ class Phone(Field):
     if not match:
       raise ValueError(
           f'Phone number must contain digits. The length of the phone number must be 10 digits.')
-    return self.value
+
+  def __eq__(self, other: object) -> bool:
+    if isinstance(other, Phone):
+      return self.value == other.value
+    if isinstance(other, str):
+      return self.value == other
+    return False
